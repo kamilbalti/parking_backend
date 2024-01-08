@@ -7,6 +7,7 @@ const SubArea = require('../../Schema/SubAreaSchema');
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+    console.log('update')
     const { slotObj, slotNo, bookDetail } = req.body
     // console.log(slotNo)
     let slots = await Slot.findOne({ _id: slotObj?._id })
