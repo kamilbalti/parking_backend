@@ -9,7 +9,7 @@ dotenv.config({ path: './config.env' })
 router.post('/register', async (req, res) => {    
     try {
         const { email, password, name } = req.body
-        console.log(email, password, name)
+        // console.log(email, password, name)
         const hashedPaswword = await bcrypt.hash(password, PASSWORD_MIN_LIMIT)
         let status = 'User'
         const user = new User({ email, password: hashedPaswword, status, name })
@@ -36,7 +36,7 @@ router.post("/logIn/", async (req, res) => {
         let passCheck;
         if(user){
         passCheck = await bcrypt.compare(password, user.password)
-        console.log(passCheck, " Password Check")}
+        // console.log(passCheck, " Password Check")}
         if (!user){
             console.log('error')
             return res.status(401).json("Email Not Found!")}

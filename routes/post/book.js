@@ -39,15 +39,16 @@ router.post("/", async (req, res) => {
                         // console.log(!bookDetail?.booklasttime.isBefore(currentTime), 'console1')
                         // console.log('test kuch bhi')
                         const isBookingValid = (
-                            !bookDetail?.booklasttime.isBefore(currentTime) &&
-                            (
-                                (!dayjs(bookDetail?.bookstarttime).isBefore(bookingStartTime) &&
+                                !bookingLastTime.isBefore(currentTime) &&
+                            // !bookDetail?.booklasttime.isBefore(currentTime) &&
+                            ((!dayjs(bookDetail?.bookstarttime).isBefore(bookingStartTime) &&
                                 !dayjs(bookDetail?.bookstarttime).isAfter(bookingLastTime)) ||
                                 (!dayjs(bookDetail?.booklasttime).isBefore(bookingStartTime) && !dayjs(bookDetail?.booklasttime).isAfter(bookingLastTime)) ||
                                 (!dayjs(bookDetail?.bookstarttime).isAfter(bookingStartTime) && !dayjs(bookDetail?.booklasttime).isBefore(bookingLastTime))
                             )
                         );
-                        return isBookingValid;
+                        return !!isBookingValid;
+                        // console.log(!!)
                     });
                 if (await !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)

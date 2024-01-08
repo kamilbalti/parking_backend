@@ -7,11 +7,11 @@ const Area = require('../../Schema/AreaSchema');
 const router = express.Router();
 
 router.post("/", validateUser, async (req, res) => {
+    const { person } = req.body;
+    const books = await Book.find();
+    let array = [];
     try {
-        const { person } = req.body;
-        const books = await Book.find();
-        let array = [];
-        for (const book of books) {
+        const myLoop = books.map(async(book, _) => {
             const tempBook = book?.array?.find(item => item?.person === person);
             if (tempBook) {
                 const slotData = await Slot.findOne({ 'array._id': book?.parentId });
@@ -29,12 +29,14 @@ router.post("/", validateUser, async (req, res) => {
                 };
                 array.push(data);
             }
-        }
-        if (array.length > 0) {
-            res.status(200).json(array);
-        } else {
-            res.status(401).json({ message: 'No Data Found' });
-        }
+        })
+        Promise.all(myLoop).then(async() => {
+            if ( await array.length > 0) {
+                return res.status(200).json( await array);
+            } else {
+                return res.status(401).json({ message: 'No Data Found' });
+            }
+        })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
