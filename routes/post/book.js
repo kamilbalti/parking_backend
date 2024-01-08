@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
                 await slots.save()
                 await bookCheck?.array.push({ ...bookDetail })
                 await bookCheck.save()
-                // console.log(dayjs(), ' Dayjs')
+                console.log(bookCheck, ' bookCheck')
                 tempCheck = bookCheck?.array.filter((item2, index) => {
                         const currentTime = dayjs();
                         const bookingStartTime = dayjs(item2?.bookstarttime);
