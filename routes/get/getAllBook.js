@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", validateUser, async(_, res) => {
     Book.find().then((data) => {
-        return res?.status(201)?.json(data)
+        return res?.status(200)?.json(data)
     }).catch((err) => console.log('Error', err))
 })
 

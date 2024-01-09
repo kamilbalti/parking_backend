@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
             await user.save()
             
             console.log(tempProfile)
-            return res.status(201).json(await user )
+            return res.status(200).json(await user )
         }
         else return res.status(401).json('Profile is not Changed Please fill the fields to update Profile!')
     }

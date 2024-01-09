@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/", validateUser ,async (req, res) => {
     SubArea.findOne({parentId: req?.body?._id}).then((data) => {
-        return res?.status(201)?.json(data)
+        return res?.status(200)?.json(data)
     })
 })
 

@@ -46,14 +46,14 @@ router.post("/", async (req, res) => {
                     await slots.save()
                     await bookCheck?.array.push({ ...bookDetail })
                     await bookCheck.save()
-                    return res.status(201).json(slots)
+                    return res.status(200).json(slots)
                 }
             }
             else {
                 const array = [{ ...bookDetail }]
                 const book = new Book({ parentId, array })
                 await book?.save()
-                return res.status(201).json(slots)
+                return res.status(200).json(slots)
             }
         }
         catch (err) {

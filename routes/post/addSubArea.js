@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
             await tempSlots?.save()
         }
     }
-    return res.status(201).json(area)
+    return res.status(200).json(area)
 }}
     else {
     let array = [{name: subName, quantity: slots, bookQuantity: 0}]
@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
             await tempSlots?.save()
         } 
     }
-    return res.status(201).json(area)
+    return res.status(200).json(area)
     }
 
 }

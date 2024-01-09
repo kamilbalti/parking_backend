@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
         }
         const area = new Area({ name, slotQuantity: 0, areaQuantity: 0 })
         await area.save()
-        return res.status(201).json(area)
+        return res.status(200).json(area)
     }
     catch (err) {
         return res.status(500).json(err)
