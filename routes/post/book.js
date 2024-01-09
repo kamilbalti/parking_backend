@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
                 await bookCheck?.array.push({ ...bookDetail })
                 await bookCheck.save()
                 console.log(bookCheck, ' bookCheck')
-                tempCheck = bookCheck?.array.filter((item2, index) => {
+                tempCheck = Object?.values(bookCheck?.array).filter((item2, index) => {
                         const currentTime = dayjs();
                         const bookingStartTime = dayjs(item2?.bookstarttime);
                         const bookingLastTime = dayjs(item2?.booklasttime);
