@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
         await temp.save()
         const parentId = await slots?.array[slotNo - 1]?._id
         const bookCheck = await Book.findOne({ parentId })
-        let tempCheck = []
         try {
             if (bookCheck) {
                 slots.quantity += 1
@@ -27,7 +26,7 @@ router.post("/", async (req, res) => {
                 await bookCheck.save()
                 console.log(bookCheck, ' Booking Detail')
                 let tempBookCheck = typeof bookCheck?.array == 'object' ? Object?.values(bookCheck?.array) : bookCheck?.array
-                tempCheck = tempBookCheck?.filter((item2, index) => {
+                const tempCheck = tempBookCheck?.filter((item2) => {
                         const currentTime = dayjs();
                         const bookingStartTime = dayjs(item2?.bookstarttime);
                         const bookingLastTime = dayjs(item2?.booklasttime);
@@ -45,7 +44,7 @@ router.post("/", async (req, res) => {
                         console.log(!!isBookingValid)
                         return !!isBookingValid;
                     });
-                    console.log(await tempCheck, ' tempCheck')
+                    console.log(tempCheck, ' tempCheck')
                 if (await !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)
                 }
