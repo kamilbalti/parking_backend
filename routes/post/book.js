@@ -35,10 +35,8 @@ router.post("/", async (req, res) => {
                                     !dayjs(bookDetail?.booklasttime).isBefore(bookingLastTime)))
                         )
                     );
-                    console.log(!!isBookingValid)
                     return !!isBookingValid;
                 });
-                console.log(tempCheck, ' tempCheck')
                 if (await !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)
                 }
@@ -48,7 +46,6 @@ router.post("/", async (req, res) => {
                     await slots.save()
                     await bookCheck?.array.push({ ...bookDetail })
                     await bookCheck.save()
-                    console.log(bookCheck, ' Booking Detail')
                     return res.status(201).json(slots)
                 }
             }
