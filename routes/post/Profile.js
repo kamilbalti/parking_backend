@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const User = require('../../Schema/UserSchema');
-const router = require("../auth/auth")
+const router = require("../auth/auth");
+const dayjs = require('dayjs');
 
 router.post("/", async (req, res) => {
     const { name, password, email, newPassword } = req.body
@@ -24,9 +25,9 @@ router.post("/", async (req, res) => {
         else if (newPassword)
             return res.status(401).json("User Password is not match \nPlease provide Correct Password")
         console.log( !!tempProfile)
-        if ( await !!Object?.values(tempProfile)?.length) {
+        if ( await !!tempProfile) {
+            user.updatedAt = dayjs()?.format('YYYY-MM-DD')
             await user.save()
-            
             console.log(tempProfile)
             return res.status(200).json(await user )
         }
