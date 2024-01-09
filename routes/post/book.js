@@ -2,7 +2,6 @@ const express = require('express');
 const dayjs = require('dayjs')
 const Slot = require('../../Schema/slotSchema');
 const Book = require('../../Schema/bookSchema');
-// const validateUser = require('../../lib/validateUser');
 const SubArea = require('../../Schema/SubAreaSchema');
 const router = express.Router();
 
@@ -14,7 +13,6 @@ router.post("/", async (req, res) => {
         subArea = await SubArea.find()
         let tempData;
         let temp = await subArea.find((item) => tempData = item?.array?.find((item2) => item2.id == slots.parentId))
-        // tempData = temp?.array?.find((item2) => item2.id == slots.parentId)
         tempData.bookQuantity += 1
         await temp.save()
         const parentId = await slots?.array[slotNo - 1]?._id
@@ -27,7 +25,8 @@ router.post("/", async (req, res) => {
                 await slots.save()
                 await bookCheck?.array.push({ ...bookDetail })
                 await bookCheck.save()
-                tempCheck = Object?.values(bookCheck?.array).filter((item2, index) => {
+                console.log(bookCheck, ' Booking Detail')
+                tempCheck = Object?.values(bookCheck?.array)?.filter((item2, index) => {
                         const currentTime = dayjs();
                         const bookingStartTime = dayjs(item2?.bookstarttime);
                         const bookingLastTime = dayjs(item2?.booklasttime);

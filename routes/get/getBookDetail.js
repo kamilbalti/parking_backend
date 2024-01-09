@@ -31,11 +31,7 @@ router.post("/", validateUser, async (req, res) => {
             }
         })
         Promise.all(myLoop).then(async() => {
-            if ( await array.length > 0) {
-                return res.status(200).json( await array);
-            } else {
-                return res.status(200).json([]);
-            }
+            return res.status(200).json(await !!array?.length? array : []);
         })
     } catch (error) {
         console.error(error);
