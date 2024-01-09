@@ -7,22 +7,17 @@ const SubArea = require('../../Schema/SubAreaSchema');
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-    console.log('update')
     const { slotObj, slotNo, bookDetail } = req.body
-    // console.log(slotNo)
     let slots = await Slot.findOne({ _id: slotObj?._id })
     let subArea;
     if (slots) {
         subArea = await SubArea.find()
         let tempData;
         let temp = await subArea.find((item) => tempData = item?.array?.find((item2) => item2.id == slots.parentId))
-        // console.log(temp, ' temp abcd')
         // tempData = temp?.array?.find((item2) => item2.id == slots.parentId)
         tempData.bookQuantity += 1
         await temp.save()
-        // console.log(slotNo, 'SLots No ')
         const parentId = await slots?.array[slotNo - 1]?._id
-        // console.log(slots?.array, ' id')
         const bookCheck = await Book.findOne({ parentId })
         try {
             let tempCheck;
@@ -32,13 +27,10 @@ router.post("/", async (req, res) => {
                 await slots.save()
                 await bookCheck?.array.push({ ...bookDetail })
                 await bookCheck.save()
-                console.log(bookCheck, ' bookCheck')
                 tempCheck = Object?.values(bookCheck?.array).filter((item2, index) => {
                         const currentTime = dayjs();
                         const bookingStartTime = dayjs(item2?.bookstarttime);
                         const bookingLastTime = dayjs(item2?.booklasttime);
-                        // console.log(!bookDetail?.booklasttime.isBefore(currentTime), 'console1')
-                        // console.log('test kuch bhi')
                         const isBookingValid = (
                                 !bookingLastTime.isBefore(currentTime) &&
                             // !bookDetail?.booklasttime.isBefore(currentTime) &&
@@ -49,7 +41,6 @@ router.post("/", async (req, res) => {
                             )
                         );
                         return !!isBookingValid;
-                        // console.log(!!)
                     });
                 if (await !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)
@@ -61,7 +52,6 @@ router.post("/", async (req, res) => {
             else {
                 const array = [{ ...bookDetail }]
                 const book = new Book({ parentId, array })
-                // console.log('test')
                 await book?.save()
                 return res.status(201).json(slots)
             }

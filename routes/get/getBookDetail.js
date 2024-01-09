@@ -34,7 +34,7 @@ router.post("/", validateUser, async (req, res) => {
             if ( await array.length > 0) {
                 return res.status(200).json( await array);
             } else {
-                return res.status(401).json({ message: 'No Data Found' });
+                return res.status(200).json([]);
             }
         })
     } catch (error) {
