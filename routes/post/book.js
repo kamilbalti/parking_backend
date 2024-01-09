@@ -19,36 +19,36 @@ router.post("/", async (req, res) => {
         const bookCheck = await Book.findOne({ parentId })
         try {
             if (bookCheck) {
-                slots.quantity += 1
-                slots.array[slotNo - 1].quantity += 1
-                await slots.save()
-                await bookCheck?.array.push({ ...bookDetail })
-                await bookCheck.save()
-                console.log(bookCheck, ' Booking Detail')
                 let tempBookCheck = typeof bookCheck?.array == 'object' ? Object?.values(bookCheck?.array) : bookCheck?.array
                 const tempCheck = tempBookCheck?.filter((item2) => {
-                        const currentTime = dayjs();
-                        const bookingStartTime = dayjs(item2?.bookstarttime);
-                        const bookingLastTime = dayjs(item2?.booklasttime);
-                        const isBookingValid = (
-                                !bookingLastTime.isBefore(currentTime) &&
-                            // !bookDetail?.booklasttime.isBefore(currentTime) &&
-                            ((!dayjs(bookDetail?.bookstarttime).isBefore(bookingStartTime) &&
-                                !dayjs(bookDetail?.bookstarttime).isAfter(bookingLastTime)) ||
-                                ((!dayjs(bookDetail?.booklasttime).isBefore(bookingStartTime) && 
+                    const currentTime = dayjs();
+                    const bookingStartTime = dayjs(item2?.bookstarttime);
+                    const bookingLastTime = dayjs(item2?.booklasttime);
+                    const isBookingValid = (
+                        !bookingLastTime.isBefore(currentTime) &&
+                        // !bookDetail?.booklasttime.isBefore(currentTime) &&
+                        ((!dayjs(bookDetail?.bookstarttime).isBefore(bookingStartTime) &&
+                            !dayjs(bookDetail?.bookstarttime).isAfter(bookingLastTime)) ||
+                            ((!dayjs(bookDetail?.booklasttime).isBefore(bookingStartTime) &&
                                 !dayjs(bookDetail?.booklasttime).isAfter(bookingLastTime)) ||
-                                (!dayjs(bookDetail?.bookstarttime).isAfter(bookingStartTime) && 
-                                !dayjs(bookDetail?.booklasttime).isBefore(bookingLastTime)))
-                            )
-                        );
-                        console.log(!!isBookingValid)
-                        return !!isBookingValid;
-                    });
-                    console.log(tempCheck, ' tempCheck')
+                                (!dayjs(bookDetail?.bookstarttime).isAfter(bookingStartTime) &&
+                                    !dayjs(bookDetail?.booklasttime).isBefore(bookingLastTime)))
+                        )
+                    );
+                    console.log(!!isBookingValid)
+                    return !!isBookingValid;
+                });
+                console.log(tempCheck, ' tempCheck')
                 if (await !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)
                 }
                 else {
+                    slots.quantity += 1
+                    slots.array[slotNo - 1].quantity += 1
+                    await slots.save()
+                    await bookCheck?.array.push({ ...bookDetail })
+                    await bookCheck.save()
+                    console.log(bookCheck, ' Booking Detail')
                     return res.status(201).json(slots)
                 }
             }
