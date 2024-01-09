@@ -45,6 +45,7 @@ router.post("/", async (req, res) => {
                         console.log(!!isBookingValid)
                         return !!isBookingValid;
                     });
+                    console.log(await tempCheck, ' tempCheck')
                 if (await !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)
                 }
