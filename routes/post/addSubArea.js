@@ -15,13 +15,10 @@ router.post("/", async (req, res) => {
     if( await tempSubArea){
     let tempSubAreaChild = tempSubArea?.array ? tempSubArea?.array.find((item) => item.name == subName) : 
     false;
-    console.log( tempSubArea?.array )
     if(!areaName || !slots){
-    console.log('No')
     return res.status(401).json('Error: You may forgot to enter the full data')
     }
     if( await tempSubAreaChild){
-        console.log('Error: Place Already Exist')
         return res.status(401).json('Error: Place Already Exist')
     }
     else{    
