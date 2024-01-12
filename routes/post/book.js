@@ -10,9 +10,9 @@ router.post("/", async (req, res) => {
     let slots = await Slot.findOne({ _id: slotObj?._id })
     let subArea;
     if (slots) {
-        subArea = await SubArea.find()
+        subArea =  await SubArea.find()
         let tempData;
-        let temp = await subArea.find((item) => tempData = item?.array?.find((item2) => item2.id == slots.parentId))
+        let temp =  subArea.find((item) => tempData = item?.array?.find((item2) => item2.id == slots.parentId))
         tempData.bookQuantity += 1
         await temp.save()
         const parentId = await slots?.array[slotNo - 1]?._id
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
                     );
                     return !!isBookingValid;
                 });
-                if (await !!tempCheck?.length) {
+                if ( !!tempCheck?.length) {
                     return res.status(401).json(`This slot is already booked! \nPlease select other slots`)
                 }
                 else {
@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
             }
         }
         catch (err) {
-            return res.status(500).json(err)
+            return res.status(500).json(err.message)
         }
     }
 })

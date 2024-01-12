@@ -60,8 +60,8 @@ const getUser = require('./routes/get/getUsers')
 
 
 
-app.use("/auth/", auth)
-app.use("/profile/", profile)
+app.use("/auth", auth)
+app.use("/profile", profile)
 app.use("/parking/addArea", addArea)
 app.use("/parking/book", book)
 app.use("/parking/addSubArea", addSubArea)
