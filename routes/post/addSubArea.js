@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
         }
             let slot = await new Slot({
                 parentId: subArea?.array[0]?._id, quantity: 0,
-                array: [{ no: i, quantity: 0 }]
+                array: [{ no: 1, quantity: 0 }]
             })
             if(totalSlot >= 2)
             for (let i = 2; i <= totalSlot; i++) {
