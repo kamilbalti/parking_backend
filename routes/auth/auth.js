@@ -5,12 +5,13 @@ const dotenv = require('dotenv');
 const User = require('../../Schema/UserSchema');
 const jwt = require('jsonwebtoken');
 const { PASSWORD_MIN_LIMIT } = require('../../lib/constant');
+const minPassword = PASSWORD_MIN_LIMIT || 8
 dotenv.config({ path: './config.env' })
 router.post('/register', async (req, res) => {
     try {
         const { email, userPassword, name } = req.body
         // console.log(email, password, name)
-        const hashedPaswword = await bcrypt.hash(userPassword, PASSWORD_MIN_LIMIT)
+        const hashedPaswword = await bcrypt.hash(userPassword, minPassword)
         let status = 'User'
         const user = new User({ email, password: hashedPaswword, status, name })
         await user.save()
