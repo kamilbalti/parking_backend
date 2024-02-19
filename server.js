@@ -58,7 +58,9 @@ const getAllBook = require('./routes/get/getAllBook')
 const getBookDetail = require('./routes/get/getBookDetail')
 const getUser = require('./routes/get/getUsers')
 
-
+app.get("/", (req, res) => {
+    res.status(200).send("Welcome to the Backend of Parking App")
+})
 
 app.use("/auth", auth)
 app.use("/profile", profile)
