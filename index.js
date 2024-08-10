@@ -1,12 +1,9 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-// const http = require("http")
-// const connection = require('./connect')
 
 const dotenv = require('dotenv')
 dotenv.config({ path: './config.env' })
-// connection()
 const db = process.env.DATABASE
 mongoose.connect(db, {
     useNewUrlParser: true,
@@ -19,30 +16,20 @@ mongoose.connect(db, {
 
 
 const bd = require("body-parser")
-const cors = require("cors")
-app.use(cors())
+
+const cors = require("cors");
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://parking-frontend-roan.vercel.app"], // Adjust as needed
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
 app.use(bd.urlencoded({
     extended: false
 }))
 app.use(bd.json());
-// const { Server } = require("socket.io");
-// const server = http.createServer(app)
-// const io = new Server(server, {
-//     cors: {
-//         origin: "http://localhost:3000",
-//         methods: ['GET', 'POST', 'PUT']
-//     }
-// })
-// io.on("connection", (socket) => {
-//     console.log(`User Connected: ${socket.id}`)
-//     socket.on("join_room", (data) => {
-//         socket.join(data)
-//         console.log(`User with ID: ${socket.id} joined room ${data}`)
-//     })
-//     socket.on('disconnect', () => {
-//         console.log("User Disconnected", socket.id)
-//     })
-// })
 
 const auth = require('./routes/auth/auth')
 const addArea = require('./routes/post/addArea')
