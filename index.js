@@ -25,7 +25,7 @@ const cors = require("cors");
 const corsOptions = {
   origin: ["http://localhost:3000", "https://parking-frontend-roan.vercel.app"], // Adjust as needed
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  credentials: false
 };
 
 app.use(cors(corsOptions));
