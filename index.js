@@ -49,9 +49,9 @@ const getAllBook = require('./routes/get/getAllBook')
 const getBookDetail = require('./routes/get/getBookDetail')
 const getUser = require('./routes/get/getUsers')
 
-// app.get("/", (req, res) => {
-//     res.status(200).send("<h1>Welcome to the Backend of Parkin App</h1>")
-// })
+app.get("/", (req, res) => {
+    res.status(200).send("<h1>Welcome to the Backend of Parkin App</h1>")
+})
 
 app.use("/auth", auth)
 app.use("/profile", profile)
@@ -64,7 +64,6 @@ app.use("/parking/getSlots", getSlots)
 app.use("/parking/getAllSlots", getAllSlots)
 app.use("/parking/getBook", getBook)
 app.use("/parking/getAllBook", getAllBook)
-app.use("/parking/getAllSlots", getAllBook)
 app.use("/parking/getBookDetail", getBookDetail)
 app.use("/parking/getUsers", getUser)
 
@@ -72,9 +71,8 @@ app.use("/parking/getUsers", getUser)
 
 const port = process.env.PORT;
 
-app.listen(port, () => {
-    console.log(`Server has started on port ${port}`)
-})
-
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => console.log(`Local API on ${port}`));
+}
 
 module.exports = app;
