@@ -49,9 +49,9 @@ const getAllBook = require('./routes/get/getAllBook')
 const getBookDetail = require('./routes/get/getBookDetail')
 const getUser = require('./routes/get/getUsers')
 
-app.get("/", (req, res) => {
-    res.status(200).send("<h1>Welcome to the Backend of Parking App</h1>")
-})
+// app.get("/", (req, res) => {
+//     res.status(200).send("<h1>Welcome to the Backend of Parkin App</h1>")
+// })
 
 app.use("/auth", auth)
 app.use("/profile", profile)
@@ -75,3 +75,6 @@ const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server has started on port ${port}`)
 })
+
+
+module.exports = app;
